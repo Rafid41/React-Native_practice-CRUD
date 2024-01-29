@@ -1,5 +1,12 @@
 // App.js
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    View,
+    TextInput,
+    Button,
+    ScrollView,
+} from "react-native";
 import { useState } from "react";
 import ListItem from "./Components/ListItem/ListItem";
 
@@ -8,7 +15,14 @@ export default function App() {
     const [placeList, setPlaceList] = useState([]);
 
     const list = placeList.map((item, index) => {
-        return <ListItem placeName={item} key={index} />;
+        // sending props=> if touched, show item
+        return (
+            <ListItem
+                placeName={item}
+                key={index}
+                onItemPressed={() => alert(item)}
+            />
+        );
     });
     return (
         <View style={styles.container}>
@@ -34,7 +48,7 @@ export default function App() {
                     }}
                 />
             </View>
-            <View style={{ width: "100%" }}>{list}</View>
+            <ScrollView style={{ width: "100%" }}>{list}</ScrollView>
         </View>
     );
 }
