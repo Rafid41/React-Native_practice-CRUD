@@ -1,6 +1,7 @@
 // Components\InputPlace\InputPlace.js
 import React from "react";
 import { View, TextInput, Button, StyleSheet } from "react-native";
+import nature_img from "../../assets/images/nature_1.jpg";
 
 const InputPlace = (props) => {
     return (
@@ -27,8 +28,13 @@ const InputPlace = (props) => {
                             {
                                 key: Math.random().toString(),
                                 value: props.InputValue,
+                                // passing image here
+                                image: {
+                                    uri: "https://c4.wallpaperflare.com/wallpaper/297/22/531/lake-blue-moonlight-moon-wallpaper-preview.jpg",
+                                },
                             },
                         ]);
+                        props.setInputValue("");
                     }
                 }}
             />

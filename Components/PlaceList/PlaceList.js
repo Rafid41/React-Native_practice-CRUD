@@ -13,7 +13,10 @@ const PlaceList = (props) => {
                 return (
                     <ListItem
                         placeName={info.item.value}
-                        onItemPressed={() => alert(info.item.value)}
+                        onItemPressed={() =>
+                            props.handleSelectedPlace(info.item.key)
+                        }
+                        image={info.item.image}
                     />
                 );
             }}
