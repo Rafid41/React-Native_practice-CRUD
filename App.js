@@ -3,21 +3,11 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 
 export default function App() {
-    const handleInputChange = (text) => {
-        alert(text);
-    };
     return (
+        // Inline a 2 ta {{}}, r vinno styleSheet e kore oita call korle 1ta {} dte hbe
         <View style={styles.container}>
-            <Text>Hello world</Text>
-            <Text>second para</Text>
-            {/* placeholder props */}
-            <TextInput
-                style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-                placeholder="Give Input"
-                //eta ekta fn expect ore, ja pass korbo se ta fn er vitor pass kore dbe
-                onChangeText={(text) => handleInputChange(text)}
-            />
-            <StatusBar style="auto" />
+            <Text style={{ color: "red" }}>Hello world</Text>
+            <Text style={styles.text2_style}>2nd para</Text>
         </View>
     );
 }
@@ -28,5 +18,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         alignItems: "center",
         justifyContent: "center",
+    },
+    text2_style: {
+        color: "blue",
     },
 });
