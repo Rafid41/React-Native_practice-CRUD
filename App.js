@@ -6,6 +6,7 @@ import {
     TextInput,
     Button,
     ScrollView,
+    FlatList,
 } from "react-native";
 import { useState } from "react";
 import ListItem from "./Components/ListItem/ListItem";
@@ -14,16 +15,6 @@ export default function App() {
     const [InputValue, setInputValue] = useState("");
     const [placeList, setPlaceList] = useState([]);
 
-    const list = placeList.map((item, index) => {
-        // sending props=> if touched, show item
-        return (
-            <ListItem
-                placeName={item}
-                key={index}
-                onItemPressed={() => alert(item)}
-            />
-        );
-    });
     return (
         <View style={styles.container}>
             <View style={styles.InputView}>
@@ -43,12 +34,34 @@ export default function App() {
                     onPress={() => {
                         // placeList.push(InputValue)
                         if (InputValue != "") {
-                            setPlaceList([...placeList, InputValue]);
+                            // FlatList er jnno
+                            setPlaceList([
+                                ...placeList,
+                                {
+                                    key: Math.random().toString(),
+                                    value: InputValue,
+                                },
+                            ]);
                         }
                     }}
                 />
             </View>
-            <ScrollView style={{ width: "100%" }}>{list}</ScrollView>
+            {/* FlatList ScrollVIew we moto kaj kore, bt total data eksathe load korena
+            jototuk data scroll kore gese tar age pore kisu generate kore
+            dynamically generate korte korte jay */}
+            <FlatList
+                style={{ width: "100%" }}
+                data={placeList}
+                // "info" default parameter
+                renderItem={(info) => {
+                    return (
+                        <ListItem
+                            placeName={info.item.value}
+                            onItemPressed={() => alert(info.item.value)}
+                        />
+                    );
+                }}
+            />
         </View>
     );
 }
