@@ -1,7 +1,7 @@
 // Components\InputPlace\InputPlace.js
 import React from "react";
 import { View, TextInput, Button, StyleSheet } from "react-native";
-import nature_img from "../../assets/images/nature_1.jpg";
+import nature_img from "../../../assets/images/nature_1.jpg";
 
 const InputPlace = (props) => {
     return (
