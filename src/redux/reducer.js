@@ -7,7 +7,7 @@ const initState = {
 };
 
 export const rootReducer = (state = initState, action) => {
-    switch (action.types) {
+    switch (action.type) {
         case actionTypes.ADD_PLACE:
             return {
                 ...state,
