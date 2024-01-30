@@ -17,23 +17,22 @@ const InputPlace = (props) => {
                 value={props.InputValue}
                 onChangeText={(text) => props.setInputValue(text)}
             />
+
             <Button
                 title="Add"
                 onPress={() => {
                     // placeList.push(InputValue)
-                    if (props.InputValue != "") {
+                    if (props.InputValue !== "") {
                         // FlatList er jnno
-                        props.setPlaceList([
-                            ...props.placeList,
-                            {
-                                key: Math.random().toString(),
-                                value: props.InputValue,
-                                // passing image here
-                                image: {
-                                    uri: "https://c4.wallpaperflare.com/wallpaper/297/22/531/lake-blue-moonlight-moon-wallpaper-preview.jpg",
-                                },
+
+                        props.addPlace({
+                            key: Math.random().toString(),
+                            value: props.InputValue,
+                            // passing image here
+                            image: {
+                                uri: "https://c4.wallpaperflare.com/wallpaper/297/22/531/lake-blue-moonlight-moon-wallpaper-preview.jpg",
                             },
-                        ]);
+                        });
                         props.setInputValue("");
                     }
                 }}

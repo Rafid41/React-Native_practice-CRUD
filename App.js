@@ -1,6 +1,6 @@
 // App.js
 import React from "react";
-import MainComponent from "./src/Components/MainComponent";
+import MainComponent from "./src/MainComponent";
 import { Provider } from "react-redux";
 import Store from "./src/redux/store";
 
