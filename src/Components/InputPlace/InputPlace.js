@@ -8,34 +8,14 @@ const InputPlace = (props) => {
         <View style={styles.InputView}>
             <TextInput
                 style={{
-                    width: "80%",
+                    width: "100%",
                     borderBottomWidth: 1,
                     borderColor: "green",
                     padding: 7,
                 }}
-                placeholder="Add a Place..."
+                placeholder="Name of the place"
                 value={props.InputValue}
                 onChangeText={(text) => props.setInputValue(text)}
-            />
-
-            <Button
-                title="Add"
-                onPress={() => {
-                    // placeList.push(InputValue)
-                    if (props.InputValue !== "") {
-                        // FlatList er jnno
-
-                        props.addPlace({
-                            key: Math.random().toString(),
-                            value: props.InputValue,
-                            // passing image here
-                            image: {
-                                uri: "https://c4.wallpaperflare.com/wallpaper/297/22/531/lake-blue-moonlight-moon-wallpaper-preview.jpg",
-                            },
-                        });
-                        props.setInputValue("");
-                    }
-                }}
             />
         </View>
     );
