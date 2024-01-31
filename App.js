@@ -9,7 +9,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./src/Components/Login/Login";
 import NavigationTab from "./src/Components/NavigationTab/NavigationTab";
 
-// main stack  //stack navigationk stack akare shajabe
+// main stack  //stack navigation stack akare shajabe
 const Stack = createStackNavigator();
 export default function App() {
     return (

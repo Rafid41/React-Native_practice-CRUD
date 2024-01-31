@@ -10,7 +10,8 @@ const Login = (props) => {
             <Button
                 title="Login"
                 onPress={() => {
-                    // Stack route er name=="Homme"
+                    // Stack route er name=="Home"
+                    // goto home
                     props.navigation.navigate("Home");
                 }}
             />

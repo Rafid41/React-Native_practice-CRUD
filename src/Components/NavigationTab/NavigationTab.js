@@ -1,12 +1,18 @@
 // src\Components\NavigationTab\NavigationTab.js
 import React from "react";
 import { View, Text } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import SharePlaces from "../SharePlaces/SharePlaces";
+import FindPlaces from "../FindPlaces/FindPlaces";
+
+const Tab = createBottomTabNavigator();
 
 const NavigationTab = (props) => {
     return (
-        <View>
-            <Text>Navigation Tab</Text>
-        </View>
+        <Tab.Navigator>
+            <Tab.Screen name="Share Places" component={SharePlaces} />
+            <Tab.Screen name="Find Places" component={FindPlaces} />
+        </Tab.Navigator>
     );
 };
 
