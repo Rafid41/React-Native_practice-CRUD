@@ -10,7 +10,6 @@ const PlaceList = (props) => {
             data={props.placeList}
             // "info" default parameter
             renderItem={(info) => {
-                console.log("info", info.item.value);
                 return (
                     <ListItem
                         placeName={info.item.value}
