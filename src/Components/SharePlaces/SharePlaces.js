@@ -15,11 +15,13 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const SharePlaces = (props) => {
-    const [InputValue, setInputValue] = useState("");
+    const [inputValue, setInputValue] = useState("");
+    const [image, setImage] = useState("");
+
     return (
         <View>
-            <PickImage />
-            <InputPlace InputValue={InputValue} setInputValue={setInputValue} />
+            <PickImage image={image} setImage={setImage} />
+            <InputPlace inputValue={inputValue} setInputValue={setInputValue} />
             <View
                 style={{
                     alignItems: "center",
@@ -29,12 +31,12 @@ const SharePlaces = (props) => {
                     title="Add Place"
                     onPress={() => {
                         // placeList.push(InputValue)
-                        if (InputValue !== "") {
+                        if (inputValue !== "") {
                             // FlatList er jnno
 
                             props.addPlace({
                                 key: Math.random().toString(),
-                                value: props.InputValue,
+                                value: inputValue,
                                 // passing image here
                                 image: {
                                     uri: "https://c4.wallpaperflare.com/wallpaper/297/22/531/lake-blue-moonlight-moon-wallpaper-preview.jpg",
