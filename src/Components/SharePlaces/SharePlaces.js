@@ -1,14 +1,26 @@
 // src\Components\SharePlaces\SharePlaces.js
 
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useState } from "react";
+import InputPlace from "../InputPlace/InputPlace";
+import { addPlace } from "../../redux/actionCreators";
+import { connect } from "react-redux";
 
-const SharePlaces = () => {
+// dispatchToProps
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addPlace: (place) => dispatch(addPlace(place)),
+    };
+};
+
+const SharePlaces = (props) => {
+    const [InputValue, setInputValue] = useState("");
     return (
-        <View>
-            <Text>Share Places</Text>
-        </View>
+        <InputPlace
+            InputValue={InputValue}
+            setInputValue={setInputValue}
+            addPlace={props.addPlace}
+        />
     );
 };
 
-export default SharePlaces;
+export default connect(null, mapDispatchToProps)(SharePlaces);

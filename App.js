@@ -1,7 +1,6 @@
 // App.js
 import "react-native-gesture-handler"; // file er surute ei import thakbe
 import React from "react";
-import MainComponent from "./src/MainComponent";
 import { Provider } from "react-redux";
 import Store from "./src/redux/store";
 import { NavigationContainer } from "@react-navigation/native";
