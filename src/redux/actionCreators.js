@@ -1,7 +1,7 @@
 // src\redux\actionCreators.js
 import * as actionTypes from "./actionTypes";
 
-// firebase database e upload
+//================ firebase database e upload ====================//
 // axios o use kora jay
 // ekhane fetch use kora holo
 export const addPlace = (place) => {
@@ -22,6 +22,39 @@ export const addPlace = (place) => {
     };
 };
 
+// ============== to reducer ====================//
+export const setPlaces = (places) => {
+    return {
+        type: actionTypes.SET_PLACES,
+        payload: places,
+    };
+};
+
+//================ retrive from firebase ======================//
+export const loadPlaces = () => (dispatch) => {
+    fetch(
+        "https://my-place-react-native-default-rtdb.asia-southeast1.firebasedatabase.app/places.json"
+    )
+        .catch((err) => {
+            alert("something went wrong, sorry");
+            console.log(err);
+        })
+        .then((res) => res.json())
+        .then((data_from_firebase) => {
+            const places = [];
+
+            for (let key in data_from_firebase) {
+                places.push({
+                    ...data_from_firebase[key],
+                    key: key,
+                });
+            }
+
+            dispatch(setPlaces(places));
+        });
+};
+
+// =================== delete ==================//
 export const deletePlace = (key) => {
     return {
         type: actionTypes.DELETE_PLACE,

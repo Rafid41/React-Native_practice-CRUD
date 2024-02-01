@@ -22,6 +22,12 @@ export const rootReducer = (state = initState, action) => {
                 ),
             };
 
+        case actionTypes.SET_PLACES:
+            return {
+                ...state,
+                placeList: action.payload,
+            };
+
         default:
             return state;
     }

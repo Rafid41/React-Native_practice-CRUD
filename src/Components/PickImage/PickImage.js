@@ -13,12 +13,18 @@ const PickImage = (props) => {
                 allowsEditing: true,
                 aspect: [4, 3],
                 quality: 1,
+                // img k string e convert kore base64
+                base64: true,
             });
-            // cancel na korle
+
             if (!result.canceled) {
-                // props.setImage(result.uri); hoy na
-                props.setImage(result.assets[0].uri); // or result["assets"][0]["uri"]
-                // console.log("res", result.assets[0].uri);
+                // props.setImage(result.assets[0].uri);
+                // very large data
+                // console.log(result.assets[0].base64);
+                // props.setImage(`data:image/jpg;base64,${result.base64}`);
+                props.setImage(
+                    `data:image/jpg;base64,${result.assets[0].base64}`
+                );
             }
         } catch (E) {
             console.log(result.assets[0].uri);
@@ -32,7 +38,7 @@ const PickImage = (props) => {
                 style={{ width: "100%", height: 200, marginBottom: 10 }}
             />
         );
-        console.log(showImage);
+        // console.log(showImage);
     }
     return (
         <View>

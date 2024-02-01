@@ -1,11 +1,11 @@
 // src\Components\FindPlaces\FindPlaces.js
 
 import { StyleSheet, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PlaceList from "../PlaceList/PlaceList";
 import PlaceDetail from "../PlaceDetail/PlaceDetail";
 import { connect } from "react-redux";
-import { deletePlace } from "../../redux/actionCreators";
+import { deletePlace, loadPlaces } from "../../redux/actionCreators";
 
 // redux er state k props e convert korbe
 const mapStateToProps = (state) => {
@@ -14,15 +14,21 @@ const mapStateToProps = (state) => {
     };
 };
 
-// dispatchToProps
+//=============== dispatchToProps ======================//
 const mapDispatchToProps = (dispatch) => {
     return {
         deletePlace: (key) => dispatch(deletePlace(key)),
+        loadPlaces: () => dispatch(loadPlaces()),
     };
 };
 
 const FindPlaces = (props) => {
     const [selectedPlace, setSelectedPlace] = useState(null);
+
+    // ============= useEffect() ============//
+    useEffect(() => {
+        props.loadPlaces();
+    });
 
     const handleSelectedPlace = (key) => {
         const place = props.placeList.find((place) => {
