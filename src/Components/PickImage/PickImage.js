@@ -16,9 +16,9 @@ const PickImage = (props) => {
             });
             // cancel na korle
             if (!result.canceled) {
-                //  props.setImage(result.uri); hoy na
+                // props.setImage(result.uri); hoy na
                 props.setImage(result.assets[0].uri); // or result["assets"][0]["uri"]
-                console.log("res", result.assets[0].uri);
+                // console.log("res", result.assets[0].uri);
             }
         } catch (E) {
             console.log(result.assets[0].uri);

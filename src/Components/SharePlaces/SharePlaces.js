@@ -16,7 +16,29 @@ const mapDispatchToProps = (dispatch) => {
 
 const SharePlaces = (props) => {
     const [inputValue, setInputValue] = useState("");
+    // PickImage.js theke ei state e image uri set hoy
     const [image, setImage] = useState("");
+
+    const handleAddingPlace = () => {
+        if (inputValue === "" || image === "") {
+            if (image === "") {
+                alert("Pick an Image");
+            }
+        } else {
+            // FlatList er jnno
+            props.addPlace({
+                key: Math.random().toString(),
+                value: inputValue,
+                // passing image uri link here
+                image: image,
+            });
+            setInputValue("");
+            setImage("");
+
+            // redirect to list page
+            props.navigation.navigate("Find Places");
+        }
+    };
 
     return (
         <View>
@@ -30,20 +52,7 @@ const SharePlaces = (props) => {
                 <Button
                     title="Add Place"
                     onPress={() => {
-                        // placeList.push(InputValue)
-                        if (inputValue !== "") {
-                            // FlatList er jnno
-
-                            props.addPlace({
-                                key: Math.random().toString(),
-                                value: inputValue,
-                                // passing image here
-                                image: {
-                                    uri: "https://c4.wallpaperflare.com/wallpaper/297/22/531/lake-blue-moonlight-moon-wallpaper-preview.jpg",
-                                },
-                            });
-                            setInputValue("");
-                        }
+                        handleAddingPlace();
                     }}
                 />
             </View>

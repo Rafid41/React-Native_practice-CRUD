@@ -15,7 +15,7 @@ const PlaceDetail = (props) => {
         <Modal>
             <View>
                 <Image
-                    source={props.place.image}
+                    source={{ uri: props.place.image }}
                     // internet theke image provide korle width and height dewa lagbe must
                     style={{
                         width: "100%",
