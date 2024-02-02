@@ -10,7 +10,16 @@ import {
     TouchableOpacity,
     ImageBackground,
 } from "react-native";
+import { connect } from "react-redux";
 import backgroundImage from "../../../assets/images/login_background.jpg";
+import { trySignUp } from "../../redux/actionCreators";
+
+// ============= send data to redux actionCreators =================//
+const mapDispatchToProps = (dispatch) => {
+    return {
+        trySignUp: (email, password) => dispatch(trySignUp(email, password)),
+    };
+};
 
 const Login = (props) => {
     // ================ auth state ===================//
@@ -39,6 +48,8 @@ const Login = (props) => {
                     props.navigation.navigate("Home");
                 } else {
                     if (password === confirmPassword) {
+                        // SignUp
+                        props.trySignUp(email, password);
                         props.navigation.navigate("Home");
                     } else {
                         alert("Password Fields doesn't match");
@@ -177,4 +188,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);

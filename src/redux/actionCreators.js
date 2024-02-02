@@ -61,3 +61,31 @@ export const deletePlace = (key) => {
         payload: key,
     };
 };
+
+// ============= SIGM UP================//
+const API = "AIzaSyD97bIUBjZWLCQntZpKSqp5RwBLAoEdJcc";
+
+export const trySignUp = (email, password) => (dispatch) => {
+    fetch(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API}`,
+        {
+            method: "POST",
+            body: JSON.stringify({
+                email: email,
+                password: password,
+                returnSecureToken: true,
+            }),
+            headers: { "Content-Type": "application/json" },
+        }
+    )
+        .catch((err) => {
+            console.log(err);
+            alert("Authentication Failed!");
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+        });
+};
+
+// ============= LOGIN =================//
