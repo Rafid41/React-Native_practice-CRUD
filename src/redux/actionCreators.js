@@ -5,7 +5,7 @@ import * as actionTypes from "./actionTypes";
 // axios o use kora jay
 // ekhane fetch use kora holo
 export const addPlace = (place) => {
-    return (disatch) => {
+    return (dispatch) => {
         // places table e store
         // link/uri , additional data
         fetch(
@@ -30,7 +30,7 @@ export const setPlaces = (places) => {
     };
 };
 
-//================ retrive from firebase ======================//
+//================ retrieve from firebase ======================//
 export const loadPlaces = () => (dispatch) => {
     fetch(
         "https://my-place-react-native-default-rtdb.asia-southeast1.firebasedatabase.app/places.json"
