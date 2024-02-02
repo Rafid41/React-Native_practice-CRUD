@@ -8,7 +8,9 @@ import {
     TextInput,
     StyleSheet,
     TouchableOpacity,
+    ImageBackground,
 } from "react-native";
+import backgroundImage from "../../../assets/images/login_background.jpg";
 
 const Login = (props) => {
     const [authStates, setAuthStates] = useState({
@@ -19,31 +21,71 @@ const Login = (props) => {
             confirmPassword: "",
         },
     });
-    return (
-        <View style={styles.loginView}>
-            <TextInput
-                style={styles.input}
-                placeholder="Your Email Address"
-                value={authStates.inputs.email}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Password"
-                value={authStates.inputs.password}
-            />
+
+    // ======================= switch Views ================//
+    const switchViews = () => {
+        setAuthStates({
+            ...authStates,
+            mode: authStates.mode === "login" ? "signup" : "login",
+        });
+    };
+    let confiremPassField = null;
+    if (authStates.mode === "signup") {
+        confiremPassField = (
             <TextInput
                 style={styles.input}
                 placeholder="Confirm Password"
                 value={authStates.inputs.confirmPassword}
             />
+        );
+    }
 
-            {/* submit button using TouchableOpacity */}
-            <TouchableOpacity style={styles.btnContainer}>
-                <Text style={styles.btnStyle}>
-                    {authStates.mode === "login" ? "Login" : "Sign Up"}
-                </Text>
-            </TouchableOpacity>
-        </View>
+    // ======================== return  =====================//
+    return (
+        <ImageBackground
+            source={backgroundImage}
+            style={{ width: "100%", flex: 1 }}
+            // blur bg image
+            blurRadius={8}
+        >
+            <View style={styles.loginView}>
+                {/* ==================== switch Btn ===================== */}
+                {/* spread operator diye class er property overwrite kora jabe */}
+                <TouchableOpacity
+                    style={{
+                        ...styles.btnContainer,
+                        backgroundColor: "#1167b1",
+                        width: "85%",
+                    }}
+                    onPress={() => switchViews()}
+                >
+                    <Text style={styles.btnStyle}>
+                        {authStates.mode === "login"
+                            ? "Switch to Sign Up"
+                            : "Switch to Login"}
+                    </Text>
+                </TouchableOpacity>
+                {/* ======================= Text Box ================= */}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Your Email Address"
+                    value={authStates.inputs.email}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Password"
+                    value={authStates.inputs.password}
+                />
+                {confiremPassField}
+
+                {/* submit button using TouchableOpacity */}
+                <TouchableOpacity style={styles.btnContainer}>
+                    <Text style={styles.btnStyle}>
+                        {authStates.mode === "login" ? "Login" : "Sign Up"}
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </ImageBackground>
     );
 };
 const styles = StyleSheet.create({
