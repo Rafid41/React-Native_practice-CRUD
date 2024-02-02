@@ -4,6 +4,8 @@ import * as actionTypes from "./actionTypes";
 // initial state
 const initState = {
     placeList: [],
+    // tracks if the user authenticated or not
+    isAuth: false,
 };
 
 export const rootReducer = (state = initState, action) => {
@@ -26,6 +28,12 @@ export const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 placeList: action.payload,
+            };
+
+        case actionTypes.AUTHENTICATE_USER:
+            return {
+                ...state,
+                isAuth: true,
             };
 
         default:

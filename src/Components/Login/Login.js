@@ -14,6 +14,14 @@ import { connect } from "react-redux";
 import backgroundImage from "../../../assets/images/login_background.jpg";
 import { trySignUp } from "../../redux/actionCreators";
 
+// ========= mapStateToProps =============//
+// receives data from redux, page load hole redux er data access kpra jabe
+const mapStateToProps = (state) => {
+    return {
+        isAuth: state.isAuth,
+    };
+};
+
 // ============= send data to redux actionCreators =================//
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -45,12 +53,16 @@ const Login = (props) => {
             if (re.test(email)) {
                 // process auth
                 if (authStates.mode === "login") {
-                    props.navigation.navigate("Home");
+                    //auth success hole
+                    if (props.isAuth) {
+                        props.navigation.navigate("Home");
+                    } else {
+                        alert("Login Failed");
+                    }
                 } else {
                     if (password === confirmPassword) {
                         // SignUp
                         props.trySignUp(email, password);
-                        props.navigation.navigate("Home");
                     } else {
                         alert("Password Fields doesn't match");
                     }
@@ -188,4 +200,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

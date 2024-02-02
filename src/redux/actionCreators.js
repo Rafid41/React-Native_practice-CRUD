@@ -1,5 +1,6 @@
 // src\redux\actionCreators.js
 import * as actionTypes from "./actionTypes";
+import { navigate } from "../../App";
 
 //================ firebase database e upload ====================//
 // axios o use kora jay
@@ -62,6 +63,13 @@ export const deletePlace = (key) => {
     };
 };
 
+// =============== authenticate user ==========//
+export const authUser = () => {
+    return {
+        type: actionTypes.AUTHENTICATE_USER,
+    };
+};
+
 // ============= SIGM UP================//
 const API = "AIzaSyD97bIUBjZWLCQntZpKSqp5RwBLAoEdJcc";
 
@@ -84,6 +92,13 @@ export const trySignUp = (email, password) => (dispatch) => {
         })
         .then((response) => response.json())
         .then((data) => {
+            if (data.error) {
+                alert(data.error.message);
+            } else {
+                navigate("Home");
+                // dispacth to reducer
+                dispatch(authUser());
+            }
             console.log(data);
         });
 };

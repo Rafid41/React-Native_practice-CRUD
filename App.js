@@ -8,11 +8,17 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./src/Components/Login/Login";
 import NavigationTab from "./src/Components/NavigationTab/NavigationTab";
 
-// main stack  //stack navigation stack akare shajabe
+//================ for all page navigation =================//
+const navigationRef = React.createRef();
+
+export const navigate = (name, params) => {
+    navigationRef.current && navigationRef.current.navigate(name, params);
+};
+//============= main stack  //stack navigation stack akare shajabe
 const Stack = createStackNavigator();
 export default function App() {
     return (
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
             <Provider store={Store}>
                 {/* Routing ekhane */}
                 <Stack.Navigator>
