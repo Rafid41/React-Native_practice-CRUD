@@ -6,6 +6,7 @@ const initState = {
     placeList: [],
     // tracks if the user authenticated or not
     isAuth: false,
+    token: null,
 };
 
 export const rootReducer = (state = initState, action) => {
@@ -34,6 +35,7 @@ export const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 isAuth: true,
+                token: action.payload,
             };
 
         default:

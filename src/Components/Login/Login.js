@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import backgroundImage from "../../../assets/images/login_background.jpg";
-import { trySignUp } from "../../redux/actionCreators";
+import { tryAuth } from "../../redux/actionCreators";
 
 // ========= mapStateToProps =============//
 // receives data from redux, page load hole redux er data access kpra jabe
@@ -25,7 +25,8 @@ const mapStateToProps = (state) => {
 // ============= send data to redux actionCreators =================//
 const mapDispatchToProps = (dispatch) => {
     return {
-        trySignUp: (email, password) => dispatch(trySignUp(email, password)),
+        tryAuth: (email, password, mode) =>
+            dispatch(tryAuth(email, password, mode)),
     };
 };
 
@@ -53,16 +54,11 @@ const Login = (props) => {
             if (re.test(email)) {
                 // process auth
                 if (authStates.mode === "login") {
-                    //auth success hole
-                    if (props.isAuth) {
-                        props.navigation.navigate("Home");
-                    } else {
-                        alert("Login Failed");
-                    }
+                    props.tryAuth(email, password, "login");
                 } else {
                     if (password === confirmPassword) {
                         // SignUp
-                        props.trySignUp(email, password);
+                        props.tryAuth(email, password, "signup");
                     } else {
                         alert("Password Fields doesn't match");
                     }

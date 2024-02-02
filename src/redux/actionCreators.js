@@ -6,11 +6,13 @@ import { navigate } from "../../App";
 // axios o use kora jay
 // ekhane fetch use kora holo
 export const addPlace = (place) => {
-    return (dispatch) => {
+    // auto state ashe reducer theke, variable(ekhane getState) e store korte hy
+    return (dispatch, getState) => {
+        let token = getState().token;
         // places table e store
         // link/uri , additional data
         fetch(
-            "https://my-place-react-native-default-rtdb.asia-southeast1.firebasedatabase.app/places.json",
+            `https://my-place-react-native-default-rtdb.asia-southeast1.firebasedatabase.app/places.json?auth=${token}`,
             {
                 method: "POST",
                 body: JSON.stringify(place),
@@ -32,9 +34,10 @@ export const setPlaces = (places) => {
 };
 
 //================ retrieve from firebase ======================//
-export const loadPlaces = () => (dispatch) => {
+export const loadPlaces = () => (dispatch, getState) => {
+    let token = getState().token;
     fetch(
-        "https://my-place-react-native-default-rtdb.asia-southeast1.firebasedatabase.app/places.json"
+        `https://my-place-react-native-default-rtdb.asia-southeast1.firebasedatabase.app/places.json?auth=${token}`
     )
         .catch((err) => {
             alert("something went wrong, sorry");
@@ -64,28 +67,33 @@ export const deletePlace = (key) => {
 };
 
 // =============== authenticate user ==========//
-export const authUser = () => {
+// send to reducer
+export const authUser = (token) => {
     return {
         type: actionTypes.AUTHENTICATE_USER,
+        payload: token,
     };
 };
 
-// ============= SIGM UP================//
+// ============= SIGN UP and LOGIN ================//
 const API = "AIzaSyD97bIUBjZWLCQntZpKSqp5RwBLAoEdJcc";
 
-export const trySignUp = (email, password) => (dispatch) => {
-    fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API}`,
-        {
-            method: "POST",
-            body: JSON.stringify({
-                email: email,
-                password: password,
-                returnSecureToken: true,
-            }),
-            headers: { "Content-Type": "application/json" },
-        }
-    )
+export const tryAuth = (email, password, mode) => (dispatch) => {
+    if (mode == "signup") {
+        url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API}`;
+    } else if (mode == "login") {
+        url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API}`;
+    }
+
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify({
+            email: email,
+            password: password,
+            returnSecureToken: true,
+        }),
+        headers: { "Content-Type": "application/json" },
+    })
         .catch((err) => {
             console.log(err);
             alert("Authentication Failed!");
@@ -95,12 +103,10 @@ export const trySignUp = (email, password) => (dispatch) => {
             if (data.error) {
                 alert(data.error.message);
             } else {
-                navigate("Home");
                 // dispacth to reducer
-                dispatch(authUser());
+                dispatch(authUser(data.idToken));
+                navigate("Home");
             }
             console.log(data);
         });
 };
-
-// ============= LOGIN =================//
