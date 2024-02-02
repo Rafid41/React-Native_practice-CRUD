@@ -13,6 +13,8 @@ import {
 import backgroundImage from "../../../assets/images/login_background.jpg";
 
 const Login = (props) => {
+    // ================ auth state ===================//
+
     const [authStates, setAuthStates] = useState({
         mode: "login",
         inputs: {
@@ -22,23 +24,69 @@ const Login = (props) => {
         },
     });
 
+    // ================ handle Auth =======================//
+    const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    const handleAuth = () => {
+        const email = authStates.inputs.email;
+        const password = authStates.inputs.password;
+        const confirmPassword = authStates.inputs.confirmPassword;
+
+        if (email !== "" && password !== "") {
+            if (re.test(email)) {
+                // process auth
+                if (authStates.mode === "login") {
+                    props.navigation.navigate("Home");
+                } else {
+                    if (password === confirmPassword) {
+                        props.navigation.navigate("Home");
+                    } else {
+                        alert("Password Fields doesn't match");
+                    }
+                }
+            } else {
+                alert("Invalid Email");
+            }
+        } else {
+            alert("Fill all fields");
+        }
+    };
+
     // ======================= switch Views ================//
     const switchViews = () => {
         setAuthStates({
             ...authStates,
             mode: authStates.mode === "login" ? "signup" : "login",
+            inputs: {
+                email: "",
+                password: "",
+                confirmPassword: "",
+            },
         });
     };
-    let confiremPassField = null;
+    let confirmPassField = null;
     if (authStates.mode === "signup") {
-        confiremPassField = (
+        confirmPassField = (
             <TextInput
                 style={styles.input}
                 placeholder="Confirm Password"
                 value={authStates.inputs.confirmPassword}
+                onChangeText={(value) => updateInputs(value, "confirmPassword")}
             />
         );
     }
+
+    // ======================= update Inputs==============//
+    const updateInputs = (value, inputFieldName) => {
+        setAuthStates({
+            ...authStates,
+            inputs: {
+                ...authStates.inputs,
+                // dynamically update submitted field
+                [inputFieldName]: value,
+            },
+        });
+    };
 
     // ======================== return  =====================//
     return (
@@ -70,16 +118,23 @@ const Login = (props) => {
                     style={styles.input}
                     placeholder="Your Email Address"
                     value={authStates.inputs.email}
+                    onChangeText={(value) => updateInputs(value, "email")}
                 />
                 <TextInput
                     style={styles.input}
                     placeholder="Password"
                     value={authStates.inputs.password}
+                    onChangeText={(value) => updateInputs(value, "password")}
                 />
-                {confiremPassField}
+                {confirmPassField}
 
-                {/* submit button using TouchableOpacity */}
-                <TouchableOpacity style={styles.btnContainer}>
+                {/*======== submit button using TouchableOpacity ========== */}
+                <TouchableOpacity
+                    style={styles.btnContainer}
+                    onPress={() => {
+                        handleAuth();
+                    }}
+                >
                     <Text style={styles.btnStyle}>
                         {authStates.mode === "login" ? "Login" : "Sign Up"}
                     </Text>
