@@ -1,6 +1,6 @@
 // src\redux\actionCreators.js
 import * as actionTypes from "./actionTypes";
-import { navigate } from "../../App";
+import { navigate } from "../NavigationRoot";
 
 //================ firebase database e upload ====================//
 // axios o use kora jay
@@ -105,7 +105,7 @@ export const tryAuth = (email, password, mode) => (dispatch) => {
             } else {
                 // dispacth to reducer
                 dispatch(authUser(data.idToken));
-                navigate("Home");
+                navigate("Places");
             }
             console.log(data);
         });

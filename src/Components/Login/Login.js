@@ -1,6 +1,6 @@
 // src\Components\Login\Login.js
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     Text,
@@ -13,6 +13,8 @@ import {
 import { connect } from "react-redux";
 import backgroundImage from "../../../assets/images/login_background.jpg";
 import { tryAuth } from "../../redux/actionCreators";
+// ei hook logout er por input field clear krte help kore
+import { useIsFocused } from "@react-navigation/native";
 
 // ========= mapStateToProps =============//
 // receives data from redux, page load hole redux er data access kpra jabe
@@ -42,6 +44,24 @@ const Login = (props) => {
         },
     });
 
+    const isFocused = useIsFocused();
+
+    // ================= use Effect ========================//
+    useEffect(
+        () => {
+            setAuthStates({
+                ...authStates,
+                inputs: {
+                    email: "",
+                    password: "",
+                    confirmPassword: "",
+                },
+            });
+        },
+        [isFocused]
+        //isFocused update hole, ei useEffect er setAuthStates hbe, field khali hbe
+        // isFocused update hoa mane user ei page visite korse
+    );
     // ================ handle Auth =======================//
     const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
