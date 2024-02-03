@@ -12,7 +12,7 @@ export const addPlace = (place) => {
         // places table e store
         // link/uri , additional data
         fetch(
-            `https://my-place-react-native-default-rtdb.asia-southeast1.firebasedatabase.app/places.json?auth=${token}`,
+            `https://my-place-react-native-2-default-rtdb.asia-southeast1.firebasedatabase.app/places.json?auth=${token}`,
             {
                 method: "POST",
                 body: JSON.stringify(place),
@@ -21,7 +21,10 @@ export const addPlace = (place) => {
             .catch((error) => console.log(error))
             // error na hole
             .then((response) => response.json())
-            .then((data) => console.log(data));
+            .then((data) => {
+                console.log(data);
+                console.log("check data leak addPlaces\n");
+            });
     };
 };
 
@@ -37,7 +40,7 @@ export const setPlaces = (places) => {
 export const loadPlaces = () => (dispatch, getState) => {
     let token = getState().token;
     fetch(
-        `https://my-place-react-native-default-rtdb.asia-southeast1.firebasedatabase.app/places.json?auth=${token}`
+        `https://my-place-react-native-2-default-rtdb.asia-southeast1.firebasedatabase.app/places.json?auth=${token}`
     )
         .catch((err) => {
             alert("something went wrong, sorry");
@@ -46,6 +49,7 @@ export const loadPlaces = () => (dispatch, getState) => {
         .then((res) => res.json())
         .then((data_from_firebase) => {
             const places = [];
+            console.log("check data leak==> loadPlaces\n");
 
             for (let key in data_from_firebase) {
                 places.push({
@@ -59,6 +63,28 @@ export const loadPlaces = () => (dispatch, getState) => {
 };
 
 // =================== delete ==================//
+
+//  from firebase
+export const deletePlaceFromFirebase = (dispatch, getState) => {
+    // auto state ashe reducer theke, variable(ekhane getState) e store korte hy
+    return (dispatch, getState) => {
+        let token = getState().token;
+        let place_key = getState().place_key;
+        // places table e store
+        // link/uri , additional data
+        fetch(
+            `https://my-place-react-native-2-default-rtdb.asia-southeast1.firebasedatabase.app/places/${place_key}.json?auth=${token}`,
+            {
+                method: "DELETE",
+            }
+        )
+            .catch((error) => console.log(error))
+            // error na hole
+            .then((response) => response.json())
+            .then((data) => console.log(data));
+    };
+};
+
 export const deletePlace = (key) => {
     return {
         type: actionTypes.DELETE_PLACE,
@@ -76,7 +102,7 @@ export const authUser = (token) => {
 };
 
 // ============= SIGN UP and LOGIN ================//
-const API = "AIzaSyD97bIUBjZWLCQntZpKSqp5RwBLAoEdJcc";
+const API = "AIzaSyADIgsH0rIbQXokQHeXwhln76Y1cLxAE-Q";
 
 export const tryAuth = (email, password, mode) => (dispatch) => {
     if (mode == "signup") {
@@ -107,6 +133,6 @@ export const tryAuth = (email, password, mode) => (dispatch) => {
                 dispatch(authUser(data.idToken));
                 navigate("Places");
             }
-            console.log(data);
+            // console.log(data);
         });
 };

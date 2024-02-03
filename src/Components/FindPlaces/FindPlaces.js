@@ -25,16 +25,23 @@ const mapDispatchToProps = (dispatch) => {
 const FindPlaces = (props) => {
     const [selectedPlace, setSelectedPlace] = useState(null);
 
+    // my custom fn to prevent infine firebase call
+    const load_data = () => {
+        //console.log("FP");
+        props.loadPlaces();
+    };
     // ============= useEffect() ============//
     useEffect(() => {
-        props.loadPlaces();
-    });
+        load_data();
+    }, []); // [] prevents infinite calls, will only be called when page loads
 
     const handleSelectedPlace = (key) => {
         const place = props.placeList.find((place) => {
             return place.key === key;
         });
         setSelectedPlace(place);
+
+        load_data();
     };
 
     const handleHideModal = () => {
@@ -45,6 +52,8 @@ const FindPlaces = (props) => {
         // return korbe j key pass kora key er sathe na mele
         props.deletePlace(key);
         setSelectedPlace(null);
+
+        load_data();
     };
 
     let placeDetail = null;

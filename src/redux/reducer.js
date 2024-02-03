@@ -7,6 +7,8 @@ const initState = {
     // tracks if the user authenticated or not
     isAuth: false,
     token: null,
+    // for delete
+    place_key: null,
 };
 
 export const rootReducer = (state = initState, action) => {
@@ -20,6 +22,7 @@ export const rootReducer = (state = initState, action) => {
         case actionTypes.DELETE_PLACE:
             return {
                 ...state,
+                place_key: action.payload,
                 placeList: state.placeList.filter(
                     (place) => place.key !== action.payload
                 ),
