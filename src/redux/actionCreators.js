@@ -6,6 +6,7 @@ import { navigate } from "../NavigationRoot";
 // axios o use kora jay
 // ekhane fetch use kora holo
 export const addPlace = (place) => {
+    // console.log(place);
     // auto state ashe reducer theke, variable(ekhane getState) e store korte hy
     return (dispatch, getState) => {
         let token = getState().token;
@@ -22,7 +23,8 @@ export const addPlace = (place) => {
             // error na hole
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                // load places  after add
+                dispatch(loadPlaces());
                 console.log("check data leak addPlaces\n");
             });
     };
