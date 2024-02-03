@@ -5,7 +5,11 @@ import React, { useState, useEffect } from "react";
 import PlaceList from "../PlaceList/PlaceList";
 import PlaceDetail from "../PlaceDetail/PlaceDetail";
 import { connect } from "react-redux";
-import { deletePlace, loadPlaces } from "../../redux/actionCreators";
+import {
+    deletePlace,
+    loadPlaces,
+    deletePlaceFromFirebase,
+} from "../../redux/actionCreators";
 
 // redux er state k props e convert korbe
 const mapStateToProps = (state) => {
@@ -17,7 +21,9 @@ const mapStateToProps = (state) => {
 //=============== dispatchToProps ======================//
 const mapDispatchToProps = (dispatch) => {
     return {
-        deletePlace: (key) => dispatch(deletePlace(key)),
+        deletePlaceFromFirebase: (key) =>
+            dispatch(deletePlaceFromFirebase(key)),
+        // deletePlace: (key) => dispatch(deletePlace(key)),
         loadPlaces: () => dispatch(loadPlaces()),
     };
 };
@@ -50,7 +56,8 @@ const FindPlaces = (props) => {
 
     const handleDeleteItem = (key) => {
         // return korbe j key pass kora key er sathe na mele
-        props.deletePlace(key);
+        props.deletePlaceFromFirebase(key);
+        // props.deletePlace(key);
         setSelectedPlace(null);
 
         load_data();

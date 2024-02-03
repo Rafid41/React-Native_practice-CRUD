@@ -67,15 +67,15 @@ export const loadPlaces = () => (dispatch, getState) => {
 // =================== delete ==================//
 
 //  from firebase
-export const deletePlaceFromFirebase = (dispatch, getState) => {
+export const deletePlaceFromFirebase = (key) => {
     // auto state ashe reducer theke, variable(ekhane getState) e store korte hy
     return (dispatch, getState) => {
         let token = getState().token;
-        let place_key = getState().place_key;
+
         // places table e store
         // link/uri , additional data
         fetch(
-            `https://my-place-react-native-2-default-rtdb.asia-southeast1.firebasedatabase.app/places/${place_key}.json?auth=${token}`,
+            `https://my-place-react-native-2-default-rtdb.asia-southeast1.firebasedatabase.app/places/${key}.json?auth=${token}`,
             {
                 method: "DELETE",
             }
@@ -83,10 +83,10 @@ export const deletePlaceFromFirebase = (dispatch, getState) => {
             .catch((error) => console.log(error))
             // error na hole
             .then((response) => response.json())
-            .then((data) => console.log(data));
+            .then((data) => dispatch(loadPlaces()));
     };
 };
-
+// ================== eita just silo list theke delete, use nai r =======================//
 export const deletePlace = (key) => {
     return {
         type: actionTypes.DELETE_PLACE,
